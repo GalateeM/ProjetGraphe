@@ -1,5 +1,5 @@
 
-public class School extends Participant {
+public class School extends Participant<Student> {
 
 	private int capacity;
 	
