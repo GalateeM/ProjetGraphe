@@ -1,5 +1,5 @@
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -50,6 +50,28 @@ public abstract class Participant <E extends Participant> {
 	        }
 	    }
 	    return result;
+	}
+	
+	/**
+	 * Get the prefered object E among the set of E (list of candidates)
+	 * @return : the prefered object
+	 */
+	public E getPreferenceAmongList(HashSet<E> listOfCandidates) {
+	   int currentMin = Integer.MAX_VALUE;
+	   E currentResult = null;
+		for(E candidate : listOfCandidates) {
+			int id = candidate.getId();
+			if(id < currentMin) {
+				currentMin = id;
+				currentResult = candidate;
+			}
+		}
+		return currentResult;
+	}
+	
+	
+	public void incrementNbRejects() {
+		this.nbRejects += 1;
 	}
 	
 	
