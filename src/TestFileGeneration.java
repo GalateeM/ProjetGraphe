@@ -130,7 +130,7 @@ public class TestFileGeneration {
 		    				}
 		    				prefsSchools.get(counterSchools).add(Integer.parseInt(prefs[i]));
 		    			}		    			
-		    			int capacity = Integer.parseInt(prefs[i].substring(4, 5));
+		    			int capacity = Integer.parseInt(prefs[i].substring(4, prefs[i].length() - 1));
 		    			
 		    			// Create the school
 		    			schools.put(counterSchools, new School(counterSchools, capacity));
