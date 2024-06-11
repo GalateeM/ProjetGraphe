@@ -16,6 +16,8 @@ public class MatchingManager <E1 extends Participant, E2 extends Participant> {
 	
 	private HashMap<E1, HashSet<E2>> currentAssociation;
 	
+	private MatingStrategy strategy;
+	
 	public MatchingManager(List<E1> e1List, List<E2> e2List) {
 		this.counter = 0;
 		rejected = new ArrayList<E2>();
@@ -35,9 +37,9 @@ public class MatchingManager <E1 extends Participant, E2 extends Participant> {
 		
 		while(!isComplete()) {
 			//Match the e2 and e1 according to e2 preferences
-			doCeremony();
+			this.strategy.executeCeremony();
 			//The e1s reject every e2 except its prefered one
-			doReject();
+			this.strategy.executeReject();
 			counter ++;
 		}
 		System.out.println(this.currentAssociation);
@@ -108,5 +110,16 @@ public class MatchingManager <E1 extends Participant, E2 extends Participant> {
 		return this.currentAssociation.size() == e1List.size();
 	}
 	
-	
+	public void setStrategy(String strategy) {
+		switch (strategy) {
+		case "student" :
+			this.strategy = new StudentMatingStrategy();
+			break;
+		case "school" :
+			this.strategy = new SchoolMatingStrategy();
+			break;
+		default:
+			break;
+		}
+	}
 }
