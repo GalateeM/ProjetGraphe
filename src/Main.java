@@ -26,16 +26,17 @@ public class Main {
 			switch (userPrompt) {
 			case "student":
 				manager = new MatchingManager<School, Student>(listSchools, listStudents);
+				manager.setStrategy(userPrompt);
 				manager.findAssociation();
 				break;
 			case "school":
 				manager = new MatchingManager<Student, School>(listStudents, listSchools);
+				manager.setStrategy(userPrompt);
 				manager.findAssociation();
 				break;
 			default:
 				System.out.println("erreur");
 			}
-
 		} catch (IOException e) {
 			System.err.println("An error occurred while manipulating the data file.");
 		}
