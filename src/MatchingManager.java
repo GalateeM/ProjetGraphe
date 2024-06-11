@@ -50,6 +50,9 @@ public class MatchingManager <E1 extends Participant, E2 extends Participant> {
 	private void doCeremony() {
 		for(E2 e2Iter : this.e2List) {
 			if(this.rejected.contains(e2Iter)) {
+				
+				//TODO : changer ici : prendre 1 meilleur preference si etudiant bidding
+				// prendre 'capacite' meilleure preference si ecole bidding
 				E1 preferedE1 = (E1)e2Iter.getBestPreference();
 				 if(this.currentAssociation.get(preferedE1) == null) {
 					 this.currentAssociation.put(preferedE1, new HashSet<E2>());
@@ -74,6 +77,8 @@ public class MatchingManager <E1 extends Participant, E2 extends Participant> {
 			
 			if(e2Set.size() > 1) {
 				//choose prefered one
+				//TODO : the prefered one if school bidding
+				// the 'capacite' ones if student bidding
 				E2 preferedE2 = (E2)e1Person.getPreferenceAmongList(e2Set);
 				
 				//update the rejections
@@ -96,6 +101,8 @@ public class MatchingManager <E1 extends Participant, E2 extends Participant> {
 	/**
 	 * Check if the matching is complete
 	 * @return : is the matching is complete
+	 * TODO : changer la condition : soit en checkant si toutes les capacites max sont remplies
+	 * soit en checkant que tous les etudiants soient affectes
 	 */
 	private boolean isComplete() {
 		return this.currentAssociation.size() == e1List.size();

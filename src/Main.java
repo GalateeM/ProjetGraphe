@@ -15,7 +15,6 @@ public class Main {
 		String userPrompt = promptBidding();
 		System.out.println(userPrompt);
 
-		// TODO : read file
 		TestFileGeneration fileGen = new TestFileGeneration();
 		try {
 			fileGen.createFile(3, 3);
