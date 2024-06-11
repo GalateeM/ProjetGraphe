@@ -13,7 +13,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		String userPrompt = promptBidding();
-		System.out.println(userPrompt);
+		//System.out.println(userPrompt);
 
 		TestFileGeneration fileGen = new TestFileGeneration();
 		try {

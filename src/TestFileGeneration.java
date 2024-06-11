@@ -32,7 +32,7 @@ public class TestFileGeneration {
 		fileContent.add("schools");
 		fileContent.addAll(generateParticipants(nbSchools, nbStudents, true));
 		
-		System.out.println(fileContent);
+		//System.out.println(fileContent);
 		
 		Path file = Paths.get(filename);
 		Files.write(file, fileContent, StandardCharsets.UTF_8);
