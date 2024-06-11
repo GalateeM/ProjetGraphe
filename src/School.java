@@ -11,4 +11,9 @@ public class School extends Participant<Student> {
 	public int getCapacity() {
 		return capacity;
 	}
+	
+	@Override
+	public String toString() {
+		return "id: " + getId() + "\tcapacity: " + capacity + "\n";
+	}
 }

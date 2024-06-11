@@ -72,7 +72,6 @@ public abstract class Participant <E extends Participant> {
 	
 	public void incrementNbRejects() {
 		this.nbRejects += 1;
-	}
-	
+	}	
 	
 }
