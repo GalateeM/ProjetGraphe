@@ -12,15 +12,14 @@ public class Main {
 	private static String schoolBidding = "school";
 
 	public static void main(String[] args) {
-		String userPrompt = promptBidding();
-		//System.out.println(userPrompt);
-
 		TestFileGeneration fileGen = new TestFileGeneration();
 		try {
-			fileGen.createFile(3, 3);
+			fileGen.createFile();
 			ParticipantGroup participantGroup = fileGen.createParticipants();
 			List<Student> listStudents = participantGroup.getStudents();
 			List<School> listSchools = participantGroup.getSchools();
+			String userPrompt = promptBidding();
+			
 			// admission algorithm
 			MatchingManager manager = null;
 			switch (userPrompt) {
@@ -55,7 +54,6 @@ public class Main {
 			System.out.println("Who does the bidding ? (student, school)");
 			userPrompt = console.next();
 		}
-		console.close();
 		return userPrompt;
 	}
 
