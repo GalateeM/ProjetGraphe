@@ -113,13 +113,53 @@ public class MatchingManager <E1 extends Participant, E2 extends Participant> {
 	public void setStrategy(String strategy) {
 		switch (strategy) {
 		case "student" :
-			this.strategy = new StudentMatingStrategy();
+			this.strategy = new StudentMatingStrategy((MatchingManager<School, Student>) this);
 			break;
 		case "school" :
-			this.strategy = new SchoolMatingStrategy();
+			this.strategy = new SchoolMatingStrategy((MatchingManager<Student, School>) this);
 			break;
 		default:
 			break;
 		}
+	}
+
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
+
+	public List<E2> getRejected() {
+		return rejected;
+	}
+
+	public void setRejected(List<E2> rejected) {
+		this.rejected = rejected;
+	}
+
+	public List<E1> getE1List() {
+		return e1List;
+	}
+
+	public void setE1List(List<E1> e1List) {
+		this.e1List = e1List;
+	}
+
+	public List<E2> getE2List() {
+		return e2List;
+	}
+
+	public void setE2List(List<E2> e2List) {
+		this.e2List = e2List;
+	}
+
+	public HashMap<E1, HashSet<E2>> getCurrentAssociation() {
+		return currentAssociation;
+	}
+
+	public void setCurrentAssociation(HashMap<E1, HashSet<E2>> currentAssociation) {
+		this.currentAssociation = currentAssociation;
 	}
 }
