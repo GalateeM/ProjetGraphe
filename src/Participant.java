@@ -10,14 +10,14 @@ public abstract class Participant <E extends Participant> {
 	
 	//The preferences of the participant
 	//(associate the object E with the value of preference
-	private HashMap<E, Integer> preferences;
+	protected HashMap<E, Integer> preferences;
 	
-	//The number of rejections of the participant
-	private int nbRejects;
+	//The set of rejections of the participant
+	protected HashSet<E> rejections;
 	
 	public Participant(int id) {
 		this.id = id;
-		this.nbRejects = 0;
+		this.rejections = new HashSet<E>();
 	}
 
 	public int getId() {
@@ -33,26 +33,6 @@ public abstract class Participant <E extends Participant> {
 	}
 	
 	/**
-	 * Get the prefered object E of the participant with the constraint that
-	 * is "grade" is > than participant.nbRejects
-	 * @return : the prefered object
-	 */
-	public E getBestPreference() {
-	    E result = null;
-		Iterator<Map.Entry<E, Integer>> iterator = this.preferences.entrySet().iterator();
-	    boolean estTrouve = false;
-	    while (iterator.hasNext() && !estTrouve) {
-	        Map.Entry<E, Integer> preference = iterator.next();
-	        Integer value = preference.getValue();
-	        if(value == this.nbRejects + 1) {
-	        	estTrouve = true;
-	        	result = preference.getKey();
-	        }
-	    }
-	    return result;
-	}
-	
-	/**
 	 * Get the prefered object E among the set of E (list of candidates)
 	 * @return : the prefered object
 	 */
@@ -60,18 +40,21 @@ public abstract class Participant <E extends Participant> {
 	   int currentMin = Integer.MAX_VALUE;
 	   E currentResult = null;
 		for(E candidate : listOfCandidates) {
-			int id = candidate.getId();
-			if(id < currentMin) {
-				currentMin = id;
+			int valuePreference = this.preferences.get(candidate);
+			if(valuePreference < currentMin) {
+				currentMin = valuePreference;
 				currentResult = candidate;
 			}
 		}
 		return currentResult;
 	}
 	
-	
-	public void incrementNbRejects() {
-		this.nbRejects += 1;
+	/**
+	 * Add the participant who rejected the instance in the set of rejections
+	 * @param participant
+	 */
+	public void addReject(E participant) {
+		this.rejections.add(participant);
 	}	
 	
 }

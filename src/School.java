@@ -1,3 +1,9 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Stream;
 
 public class School extends Participant<Student> {
 
@@ -15,5 +21,35 @@ public class School extends Participant<Student> {
 	@Override
 	public String toString() {
 		return "id: " + getId() + "\tcapacity: " + capacity + "\n";
+	}
+	
+	/**
+	 * Get the prefered students of the school with the constraint that
+	 * their "grade" is > than participant.nbRejects and the school cant
+	 * choose more students than its capacity
+	 * @return : the list of prefered students
+	 */
+	public List<Student> getBestPreference() {		
+	    List<Student> result = new ArrayList<Student>();
+	    Student[] temporaryList = new Student[this.preferences.size() + 1];
+		Iterator<Map.Entry<Student, Integer>> iterator = this.preferences.entrySet().iterator();	    
+	    
+	    while (iterator.hasNext()) {
+	    	Map.Entry<Student, Integer> preference = iterator.next();
+	        Integer value = preference.getValue(); 
+	        temporaryList[value] = preference.getKey();
+	    }
+	    
+	    int nbStudentsChoosen = 0;
+	    int i = 1;
+	    while (nbStudentsChoosen < this.capacity && i<temporaryList.length) {
+	    	Student studentIter = temporaryList[i];
+	    	if (!this.rejections.contains(studentIter)) {
+	    		result.add(studentIter);
+	    		nbStudentsChoosen++;
+	    	}
+	    	i++;
+	    }	    
+	    return result;
 	}
 }

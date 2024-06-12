@@ -18,5 +18,9 @@ public class StudentMatingStrategy implements MatingStrategy {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	@Override
+	public boolean executeIsComplete() {
+		return this.matchingManager.getCurrentAssociation().size() == this.matchingManager.getE1List().size();
+	}
 }
