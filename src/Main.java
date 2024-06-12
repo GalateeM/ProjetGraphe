@@ -14,7 +14,7 @@ public class Main {
 	public static void main(String[] args) {
 		TestFileGeneration fileGen = new TestFileGeneration();
 		try {
-			// fileGen.createFile();
+			fileGen.createFile();
 			ParticipantGroup participantGroup = fileGen.createParticipants();
 			List<Student> listStudents = participantGroup.getStudents();
 			List<School> listSchools = participantGroup.getSchools();
