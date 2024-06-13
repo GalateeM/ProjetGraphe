@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class TestFileGeneration {
 
-	private String filename = "data.txt";
+	private String filename;
 
 	//inputs for the choice of the capacity generation
 	private final static String capacityInferiorRandom = "IR";
@@ -33,7 +33,11 @@ public class TestFileGeneration {
 	 * Creates the generator of test file by prompting the user the capacity
 	 * caracteristic, the number of students and the number of schools
 	 */
-	public TestFileGeneration() {
+	public TestFileGeneration(String fileName) {
+		this.filename = fileName;
+	}
+	
+	public void promptGeneration() {
 		Scanner console = new Scanner(System.in);
 		// capacity
 		this.capacityChoice = "";
@@ -61,7 +65,6 @@ public class TestFileGeneration {
 		}
 		//instantiate the capacity per school
 		createCapacities();
-
 	}
 	
 	/**

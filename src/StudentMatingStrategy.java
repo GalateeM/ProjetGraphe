@@ -65,4 +65,10 @@ public class StudentMatingStrategy implements MatingStrategy {
 	public boolean executeIsComplete() {
 		return this.matchingManager.getCurrentAssociation().size() == this.matchingManager.getE1List().size();
 	}
+
+	@Override
+	public void saveResult() {
+		// TODO Auto-generated method stub
+		
+	}
 }

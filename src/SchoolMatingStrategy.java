@@ -1,3 +1,10 @@
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -77,5 +84,21 @@ public class SchoolMatingStrategy implements MatingStrategy {
 		}
 		return this.matchingManager.getCurrentAssociation().size() == this.matchingManager.getE1List().size() ||
 				nbStudentsWithSchool == this.totalSchoolsCapacities;
+	}
+
+	@Override
+	public void saveResult() {
+		HashMap<Student, HashSet<School>> finalAssociation = this.matchingManager.getCurrentAssociation();
+		HashMap<School, HashSet<Student>> reverseAssociation = new HashMap<School, HashSet<Student>>();
+		for(Map.Entry<Student, HashSet<School>> association : this.matchingManager.getCurrentAssociation().entrySet()) {
+			for(School schoolIter : association.getValue()) {
+				//if the key does not exist
+				if(!reverseAssociation.containsKey(schoolIter)) {
+					reverseAssociation.put(schoolIter, new HashSet<>());
+				}
+				reverseAssociation.get(schoolIter).add(association.getKey());
+			}
+		}
+		Main.saveResultToFile(reverseAssociation);
 	}
 }

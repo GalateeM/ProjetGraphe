@@ -42,6 +42,7 @@ public class MatchingManager <E1 extends Participant, E2 extends Participant> {
 			this.strategy.executeReject();
 			counter ++;
 		}
+		this.strategy.saveResult();
 		System.out.println("Final state:");
 		System.out.println("currentAssociation:\n  " + this.currentAssociation);
 		System.out.println("Nb rounds needed to achieve coverage : " + this.counter);
