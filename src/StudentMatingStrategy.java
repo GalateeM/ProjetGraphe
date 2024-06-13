@@ -5,11 +5,14 @@ import java.util.Map;
 public class StudentMatingStrategy implements MatingStrategy {
 
 	private MatchingManager<School, Student> matchingManager;
+	private int totalSchoolsCapacities;
 	
 	public StudentMatingStrategy(MatchingManager<School, Student> manager) {
 		this.matchingManager = manager;
 		
-		
+		for (School school : this.matchingManager.getE1List()) {
+			totalSchoolsCapacities += school.getCapacity();
+		}
 	}
 	
 	@Override
@@ -51,11 +54,7 @@ public class StudentMatingStrategy implements MatingStrategy {
 				}
 
 				//replace the list with only the prefered ones
-				for(Student student : preferedStudents) {
-					HashSet<Student> oneElementSet = new HashSet<Student>();
-					oneElementSet.add(student);
-					this.matchingManager.getCurrentAssociation().put(school, oneElementSet);
-				}
+				this.matchingManager.getCurrentAssociation().put(school, preferedStudents);
 			}
 
 		}
@@ -63,12 +62,17 @@ public class StudentMatingStrategy implements MatingStrategy {
 	
 	@Override
 	public boolean executeIsComplete() {
-		return this.matchingManager.getCurrentAssociation().size() == this.matchingManager.getE1List().size();
+		int nbStudentsWithSchool = 0;
+		for (Map.Entry<School, HashSet<Student>> association : this.matchingManager.getCurrentAssociation().entrySet()) {
+			nbStudentsWithSchool += association.getValue().size();
+		}
+		
+		return nbStudentsWithSchool == this.matchingManager.getE2List().size() ||
+				nbStudentsWithSchool == this.totalSchoolsCapacities;
 	}
 
 	@Override
 	public void saveResult() {
-		// TODO Auto-generated method stub
-		
+		Main.saveResultToFile(this.matchingManager.getCurrentAssociation());
 	}
 }

@@ -71,7 +71,7 @@ public class School extends Participant<Student> {
 		// Trier les étudiants par valuePreference la plus basse
 		List<Student> studentList = new ArrayList<Student>(listOfCandidates);
 		Collections.sort(studentList, (stu1, stu2) -> {
-	        return this.preferences.get(stu2) - this.preferences.get(stu1);
+	        return this.preferences.get(stu1) - this.preferences.get(stu2);
 	    });
 		
 	   int currentMin = Integer.MAX_VALUE;
