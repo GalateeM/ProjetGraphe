@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -51,5 +54,33 @@ public class School extends Participant<Student> {
 	    	i++;
 	    }	    
 	    return result;
+	}
+	
+	/**
+	 * Get a list of prefered student among the set of student candidates
+	 * @return : the list of preferred students
+	 * 
+	 * { list.size() <= school.capacity }
+	 */
+	public HashSet<Student> getPreferencesAmongList(HashSet<Student> listOfCandidates) {
+		// Si nbCandidats < capacité --> let's go
+		if(listOfCandidates.size() <= this.capacity) {
+			return listOfCandidates;
+		}
+		
+		// Trier les étudiants par valuePreference la plus basse
+		List<Student> studentList = new ArrayList<Student>(listOfCandidates);
+		Collections.sort(studentList, (stu1, stu2) -> {
+	        return this.preferences.get(stu2) - this.preferences.get(stu1);
+	    });
+		
+	   int currentMin = Integer.MAX_VALUE;
+	   HashSet<Student> currentResult = new HashSet<Student>();
+	   int nbAccepted = 0;
+	   while(nbAccepted < this.capacity) {
+			currentResult.add(studentList.get(nbAccepted));
+			nbAccepted++;
+	   }
+		return currentResult;
 	}
 }

@@ -40,7 +40,7 @@ public class StudentMatingStrategy implements MatingStrategy {
 			if(studentSet.size() > school.getCapacity()) {
 				//create a list prefered students
 				// !!!!! Must return a LIST !!!!!
-				List<Student> preferedStudents = school.getPreferenceAmongList(studentSet);
+				HashSet<Student> preferedStudents = school.getPreferencesAmongList(studentSet);
 
 				//update the rejections
 				for(Student student : studentSet) {
