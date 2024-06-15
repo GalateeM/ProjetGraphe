@@ -1,5 +1,4 @@
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 public class StudentMatingStrategy implements MatingStrategy {
@@ -19,7 +18,7 @@ public class StudentMatingStrategy implements MatingStrategy {
 	public void executeCeremony() {
 		for(Student student : this.matchingManager.getE2List()) {		
 			if(this.matchingManager.getRejected().contains(student)) {
- 				 School preferedSchool = (School)student.getBestPreference(); 				 
+ 				 School preferedSchool = student.getBestPreference(); 				 
  				 if(this.matchingManager.getCurrentAssociation().get(preferedSchool) == null) {
 					 this.matchingManager.getCurrentAssociation().put(preferedSchool, new HashSet<Student>());
 				 }
@@ -41,8 +40,7 @@ public class StudentMatingStrategy implements MatingStrategy {
 			School school = association.getKey();
 
 			if(studentSet.size() > school.getCapacity()) {
-				//create a list prefered students
-				// !!!!! Must return a LIST !!!!!
+				//create a set prefered students
 				HashSet<Student> preferedStudents = school.getPreferencesAmongList(studentSet);
 
 				//update the rejections
@@ -71,7 +69,7 @@ public class StudentMatingStrategy implements MatingStrategy {
 				nbStudentsWithSchool == this.totalSchoolsCapacities;
 	}
 
-	@Override
+	@Override 
 	public void saveResult() {
 		Main.saveResultToFile(this.matchingManager.getCurrentAssociation());
 	}

@@ -18,10 +18,10 @@ public class TestFileGeneration {
 	private String filename;
 
 	//inputs for the choice of the capacity generation
-	private final static String capacityInferiorRandom = "IR";
-	private final static String capacityInferiorSame = "IE";
-	private final static String capacityEquals = "E";
-	private final static String capacitySuperior = "S";
+	private static final String capacityInferiorRandom = "IR";
+	private static final String capacityInferiorSame = "IE";
+	private static final String capacityEquals = "E";
+	private static final String capacitySuperior = "S";
 
 	private String capacityChoice;
 	private int numberOfStudentsChoice;
@@ -30,23 +30,29 @@ public class TestFileGeneration {
 	private List<Integer> capacities;
 
 	/**
-	 * Creates the generator of test file by prompting the user the capacity
-	 * caracteristic, the number of students and the number of schools
+	 * Obtains a TestFileGeneration object, with the name of the input file
 	 */
 	public TestFileGeneration(String fileName) {
 		this.filename = fileName;
 	}
 	
+	/**
+	 * Ask the user about the total capacity of schools compared to the number of students,
+	 * the number of schools and the number of students
+	 */
 	public void promptGeneration() {
 		Scanner console = new Scanner(System.in);
 		// capacity
 		this.capacityChoice = "";
 		while (!isValidCapacity()) {
-			System.out.println("Total capacity (compared to number of students) ?"
-					+ "\n- inferior (random numbers): IR"
-					+ "\n- inferior (all numbers equals): IE"
-					+ "\n- equals: E"
-					+ "\n- superior: S");
+			String text = """
+					Total capacity (compared to number of students) ?
+					- inferior (random numbers): IR
+					- inferior (all numbers equals): IE
+					- equals: E
+					- superior: S
+					""";
+			System.out.println(text);
 			capacityChoice = console.next();
 		}
 
@@ -93,8 +99,6 @@ public class TestFileGeneration {
 		// Schools part
 		fileContent.add("schools");
 		fileContent.addAll(generateParticipants(this.numberOfSchoolsChoice, this.numberOfStudentsChoice, true));
-
-		//System.out.println(fileContent);
 
 		Path file = Paths.get(filename);
 		Files.write(file, fileContent, StandardCharsets.UTF_8);
@@ -146,37 +150,35 @@ public class TestFileGeneration {
 	private void createCapacities() {
 		int totalCapacity = 0;
 		Random r = new Random();
-		List<Integer> capacities = new ArrayList<Integer>();
+		this.capacities = new ArrayList<Integer>();
 		for (int i = 0; i < this.numberOfSchoolsChoice; i++) {
 			switch (this.capacityChoice) {
 				case capacityInferiorRandom:
 					//random number between 0 and (the residual capacity / 2)
 					int capacityIR = r.nextInt(0, (this.numberOfStudentsChoice - totalCapacity) / 2);
-					capacities.add(capacityIR);
+					this.capacities.add(capacityIR);
 					totalCapacity += capacityIR;
 					break;
 				case capacityInferiorSame:
-					capacities.add((int) Math.floor(this.numberOfStudentsChoice - 1) / this.numberOfSchoolsChoice);
+					this.capacities.add((int) Math.floor(this.numberOfStudentsChoice - 1.0) / this.numberOfSchoolsChoice);
 					break;
 				case capacityEquals:
 					if (i == this.numberOfSchoolsChoice - 1) {
 						//for the last school we want to have the residual capacity to have totalCapacity = numberOfStudents
-						capacities.add(this.numberOfStudentsChoice - totalCapacity);
+						this.capacities.add(this.numberOfStudentsChoice - totalCapacity);
 					} else {
 						int capacityE = this.numberOfStudentsChoice / this.numberOfSchoolsChoice;
-						capacities.add(capacityE);
+						this.capacities.add(capacityE);
 						totalCapacity += capacityE;
 					}
 					break;
 				case capacitySuperior:
 					//arbitrary number to be certain that the totalCapacity is bigger than the number of students
-					capacities.add((int) ((this.numberOfStudentsChoice * 2) / this.numberOfSchoolsChoice));
+					this.capacities.add(((this.numberOfStudentsChoice * 2) / this.numberOfSchoolsChoice));
 					break;
 			}
 
 		}
-
-		this.capacities = capacities;
 	}
 
 	/**

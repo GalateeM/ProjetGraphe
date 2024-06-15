@@ -1,12 +1,9 @@
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Stream;
 
 public class School extends Participant<Student> {
 
@@ -27,16 +24,15 @@ public class School extends Participant<Student> {
 	}
 	
 	/**
-	 * Get the prefered students of the school with the constraint that
-	 * their "grade" is > than participant.nbRejects and the school cant
-	 * choose more students than its capacity
+	 * Get the prefered students of the school which is not on the rejection's list
 	 * @return : the list of prefered students
 	 */
-	public List<Student> getBestPreference() {		
-	    List<Student> result = new ArrayList<Student>();
+	public HashSet<Student> getBestPreference() {		
+		HashSet<Student> result = new HashSet<Student>();
 	    Student[] temporaryList = new Student[this.preferences.size() + 1];
 		Iterator<Map.Entry<Student, Integer>> iterator = this.preferences.entrySet().iterator();	    
 	    
+		//sort the students in an array according to the school rating
 	    while (iterator.hasNext()) {
 	    	Map.Entry<Student, Integer> preference = iterator.next();
 	        Integer value = preference.getValue(); 
@@ -63,18 +59,16 @@ public class School extends Participant<Student> {
 	 * { list.size() <= school.capacity }
 	 */
 	public HashSet<Student> getPreferencesAmongList(HashSet<Student> listOfCandidates) {
-		// Si nbCandidats < capacité --> let's go
 		if(listOfCandidates.size() <= this.capacity) {
 			return listOfCandidates;
 		}
 		
-		// Trier les étudiants par valuePreference la plus basse
+		// sort the students with the school preferences
 		List<Student> studentList = new ArrayList<Student>(listOfCandidates);
-		Collections.sort(studentList, (stu1, stu2) -> {
-	        return this.preferences.get(stu1) - this.preferences.get(stu2);
-	    });
+		Collections.sort(studentList, (stu1, stu2) -> 
+	        this.preferences.get(stu1) - this.preferences.get(stu2)
+		);
 		
-	   int currentMin = Integer.MAX_VALUE;
 	   HashSet<Student> currentResult = new HashSet<Student>();
 	   int nbAccepted = 0;
 	   while(nbAccepted < this.capacity) {

@@ -1,3 +1,4 @@
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -7,6 +8,10 @@ public class Student extends Participant<School> {
 		super(id);
 	}
 	
+	/**
+	 * Get the prefered school of the student which is not in the rejection's list
+	 * @return : the prefered school
+	 */
 	public School getBestPreference() {		
 		School preferedSchool = null;
 		
@@ -19,6 +24,24 @@ public class Student extends Participant<School> {
 		}
 		
 		return preferedSchool;
+	}
+	
+	/**
+	 * Get the prefered School among the set of Schools (list of candidates)
+	 * @param listOfCandidates the list of schools which has accepted the student
+	 * @return : the prefered object
+	 */
+	public School getPreferenceAmongList(HashSet<School> listOfCandidates) {
+	   int currentMin = Integer.MAX_VALUE;
+	   School currentResult = null;
+		for(School candidate : listOfCandidates) {
+			int valuePreference = this.preferences.get(candidate);
+			if(valuePreference < currentMin) {
+				currentMin = valuePreference;
+				currentResult = candidate;
+			}
+		}
+		return currentResult;
 	}
 	
 	

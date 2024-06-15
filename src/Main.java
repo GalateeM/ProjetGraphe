@@ -79,7 +79,7 @@ public class Main {
 	}
 	
 	/**
-	 * Ask the user wether we use an existing file or generate a new one
+	 * Ask the user whether we use an existing file or generate a new one
 	 * @return : true if we want to generate a file
 	 */
 	private static boolean promptGenerationFile() {
@@ -89,7 +89,7 @@ public class Main {
 			System.out.println("Generate a new file ?");
 			userPrompt = console.next();
 		}
-		return yesAnswer.equals(userPrompt) ? true : false;
+		return yesAnswer.equals(userPrompt);
 	}
 	
 	/**

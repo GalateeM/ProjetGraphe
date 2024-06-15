@@ -1,12 +1,5 @@
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 public class SchoolMatingStrategy implements MatingStrategy {
@@ -26,7 +19,7 @@ public class SchoolMatingStrategy implements MatingStrategy {
 	public void executeCeremony() {
 		for(School school : this.matchingManager.getE2List()) {
 			if(this.matchingManager.getRejected().contains(school)) {
-				List<Student> students = school.getBestPreference();
+				HashSet<Student> students = school.getBestPreference();
 				for(Student student : students) {
 					if(this.matchingManager.getCurrentAssociation().get(student) == null) {
 						this.matchingManager.getCurrentAssociation().put(student, new HashSet<School>());
@@ -88,7 +81,6 @@ public class SchoolMatingStrategy implements MatingStrategy {
 
 	@Override
 	public void saveResult() {
-		HashMap<Student, HashSet<School>> finalAssociation = this.matchingManager.getCurrentAssociation();
 		HashMap<School, HashSet<Student>> reverseAssociation = new HashMap<School, HashSet<Student>>();
 		for(Map.Entry<Student, HashSet<School>> association : this.matchingManager.getCurrentAssociation().entrySet()) {
 			for(School schoolIter : association.getValue()) {
